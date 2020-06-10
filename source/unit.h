@@ -4,38 +4,36 @@
 ===============================
 */
 
-struct unit{            //Generic SI Derived-Unit
-  double s   = 0;        //Time
-  double m   = 0;        //Length
-  double kg  = 0;        //Mass
-  double A   = 0;        //Current
-  double K   = 0;        //Thermodynamic Temperature
-  double mol = 0;        //Amount
-  double cd  = 0;        //Luminosity
+#define MAXDIM 7
 
+void fatal(string err){
+  cout<<err<<endl;
+  exit(0);
+}
+
+struct unit{              //Generic SI Derived-Unit
+  vector<double> dim;
   unit(){}; //Dimensionless
-  unit(int _s, int _m, int _kg, int _A, int _K, int _mol,  int _cd){
-    s = _s; m = _m; kg = _kg; A = _A, K = _K, mol = _mol, cd = _cd;
+  unit(dlist d){
+    for(auto&e: d)
+      dim.push_back(e);
   }
 };
 
-const unit D =   unit(0, 0, 0, 0, 0, 0, 0);
-const unit s =   unit(1, 0, 0, 0, 0, 0, 0);
-const unit m =   unit(0, 1, 0, 0, 0, 0, 0);
-const unit kg =  unit(0, 0, 1, 0, 0, 0, 0);
-const unit A =   unit(0, 0, 0, 1, 0, 0, 0);
-const unit K =   unit(0, 0, 0, 0, 1, 0, 0);
-const unit mol = unit(0, 0, 0, 0, 0, 1, 0);
-const unit cd =  unit(0, 0, 0, 0, 0, 0, 1);
+const unit D =   unit({0, 0, 0, 0, 0, 0, 0});
+const unit s =   unit({1, 0, 0, 0, 0, 0, 0});
+const unit m =   unit({0, 1, 0, 0, 0, 0, 0});
+const unit kg =  unit({0, 0, 1, 0, 0, 0, 0});
+const unit A =   unit({0, 0, 0, 1, 0, 0, 0});
+const unit K =   unit({0, 0, 0, 0, 1, 0, 0});
+const unit mol = unit({0, 0, 0, 0, 0, 1, 0});
+const unit cd =  unit({0, 0, 0, 0, 0, 0, 1});
 
 bool operator==(const unit& l, const unit& r){
-  if(l.s   != r.s)   return false;
-  if(l.m   != r.m)   return false;
-  if(l.kg  != r.kg)  return false;
-  if(l.A   != r.A)   return false;
-  if(l.K   != r.K)   return false;
-  if(l.mol != r.mol) return false;
-  if(l.cd  != r.cd)  return false;
+  if(l.dim.size() != r.dim.size())
+    fatal("Dimension mismatch");
+  for(int i = 0; i < l.dim.size(); i++)
+    if(l.dim[i] != r.dim[i]) return false;
   return true;
 }
 
@@ -45,51 +43,34 @@ bool operator!=(const unit& l, const unit& r){
 
 unit operator+(unit l, unit r){
   if(l == r) return l;
-
-  //Decide on a more comprehensive exit message
-
-  //somehow output the position of the error!
-  std::cout<<"Unit mismatch in operator +: "<<std::endl;
-  exit(0);
+  fatal("Unit mismatch in operator +");
 }
 
 unit operator-(unit l, unit r){
   if(l == r) return l;
-  std::cout<<"Unit mismatch in operator -: "<<std::endl;
-  exit(0);
+  fatal("Unit mismatch in operator -");
 }
 
 unit operator/(unit l, unit r){
-  l.s   -= r.s;
-  l.m   -= r.m;
-  l.kg  -= r.kg;
-  l.A   -= r.A;
-  l.K   -= r.K;
-  l.mol -= r.mol;
-  l.cd  -= r.cd;
+  if(l.dim.size() != r.dim.size())
+    fatal("Dimension mismatch");
+  for(int i = 0; i < l.dim.size(); i++)
+    l.dim[i] -= r.dim[i];
   return l;
 }
 
 unit operator*(unit l, unit r){
-  l.s   += r.s;
-  l.m   += r.m;
-  l.kg  += r.kg;
-  l.A   += r.A;
-  l.K   += r.K;
-  l.mol += r.mol;
-  l.cd  += r.cd;
+  if(l.dim.size() != r.dim.size())
+    fatal("Dimension mismatch");
+  for(int i = 0; i < l.dim.size(); i++)
+    l.dim[i] += r.dim[i];
   return l;
 }
 
 template<typename T>
 unit operator^(unit l, const T f){   //Note: this operator has bad precedence, so requires bracketing
-  l.s   *= f;
-  l.m   *= f;
-  l.kg  *= f;
-  l.A   *= f;
-  l.K   *= f;
-  l.mol *= f;
-  l.cd  *= f;
+  for(int i = 0; i < l.dim.size(); i++)
+    l.dim[i] *= f;
   return l;
 }
 
@@ -102,13 +83,13 @@ void uprint(ostream& o, string x, double f){
 }
 
 ostream& operator<<(ostream& o, const unit& u){
-  uprint(o, "kg", u.kg);
-  uprint(o, "m", u.m);
-  uprint(o, "A", u.A);
-  uprint(o, "K", u.K);
-  uprint(o, "mol", u.mol);
-  uprint(o, "cd", u.cd);
-  uprint(o, "s", u.s);
+  uprint(o, "kg", u.dim[0]);
+  uprint(o, "m", u.dim[1]);
+  uprint(o, "A", u.dim[2]);
+  uprint(o, "K", u.dim[3]);
+  uprint(o, "mol", u.dim[4]);
+  uprint(o, "cd", u.dim[5]);
+  uprint(o, "s", u.dim[6]);
   return o;
 }
 

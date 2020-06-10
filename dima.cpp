@@ -15,8 +15,11 @@ By Nicholas McDonald 2020
 #include "math.h"
 #include <map>
 #include <vector>
+#include <array>
+#include <initializer_list>
 
 using namespace std;
+using dlist = initializer_list<double>;
 
 #include "source/unit.h"
 #include "source/define.h"
