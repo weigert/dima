@@ -5,11 +5,11 @@ Also functions as a minimalist commandline calculator (i.e. unit = dimensionless
 
 ## Usage
 
-dima will evaluate a mathematical expression with SI units sources from a library of units:
+dima will evaluate a mathematical expression with SI units:
 
     dima [expression]
 
-The expression can consist of any of the following mathematical operators:
+The expression can consist of any of the following mathematical operators (spaces are ignored):
 
     +   addition
     -   subtraction
@@ -31,29 +31,28 @@ Values between operators can are given by a value, unit or value unit pair:
 
     > dima 1m^2/s^2
     1 m^2 s^-2
-
-Dima checks for syntax errors and reports the location of the error.
-
-Note that dima uses square brackets because the default bash shell doesn't like `()` round brackets, and I don't want to always have to type `\(` and `\)`. This program is about convenience. Feel free to fork and change though if you are using a different shell.
+    
+    > dima J/N
+    1 m
 
 Empty brackets will evaluate to unity:
 
     > dima []
     1
 
-### Unit Dictionary
-Units are defined in a unit dictionary (see `define.h`) that you are free to tune for your specific applications.
+Note that dima uses square brackets because the default bash shell doesn't like `()` round brackets, and I don't want to always have to type `\(` and `\)`. This program is about convenience. Feel free to fork and change though if you are using a different shell.
 
-Units are expressed in terms of SI base units and stored in a map. The map stores a value-unit pair, such that e.g. ms is a {1E-3, s} tuple, referenced by the unit string (here: "ms").
+Dima also checks for syntax errors and reports the location of the error.
+
+### Unit Dictionary
+Units are defined in a unit dictionary (see `define.h`) that you are free to tune for your specific application.
+
+Units are expressed in terms of SI base units and stored in a map. The map stores a value-unit pair, such that e.g. ms is a {1E-3, s} tuple, referenced by the unit string "ms".
 
 Dima will also throw errors when trying to add non-consistent units, but will evaluate correctly with units that can be combined according to their base units:
 
     > dima 1m + 1km
     1001 m
-
-
-
-
 
 ### Compilation
 
@@ -63,10 +62,10 @@ This program has no dependencies (besides a c++ compiler and the standard templa
 
 Running this with privilege will place the executable in your `/usr/bin` so you can access it anywhere.
 
-## Features
+## Other Stuff
 
 ### Unit Dictionaries
-A standard set of units is defined in `define.h` in the form of a map. Units are parsed out of the expression and identified in the map.
+A standard set of units is defined in `define.h`. Units are parsed out of the expression and identified in the map.
 
 Note that you should express things in terms of base units to avoid potential ambiguities / conflicts.
 
