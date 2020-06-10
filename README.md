@@ -1,7 +1,7 @@
 # dima
 zero-dependency commandline dimensional analysis tool for unit conversion and consistency validation, written in c++
 
-Also functions as a minimalist commandline calculator (i.e. unit = dimensionless).
+Also functions as a minimalist commandline calculator (i.e. unit = dimensionless) and physical constant / unit expression dictionary in your commandline.
 
 ## Usage
 
