@@ -39,6 +39,13 @@ Empty brackets will evaluate to unity:
 
     > dima []
     1
+    
+Dima has a built in set of physical constants:
+
+    > dima R
+    8.31446 kg m^2 K^-1 mol^-1 s^-2
+    
+You can change your cout precision (see main file) to stop early value truncation.
 
 Note that dima uses square brackets because the default bash shell doesn't like `()` round brackets, and I don't want to always have to type `\(` and `\)`. This program is about convenience. Feel free to fork and change though if you are using a different shell.
 
