@@ -9,14 +9,21 @@ dima will evaluate a mathematical expression with SI units:
 
     dima [expression]
 
-The expression can consist of any of the following mathematical operators (spaces are ignored):
+The expression can consist of any of the following mathematical binary operators (spaces are ignored, evaluated in order):
 
-    +   addition
-    -   subtraction
+    []  bracketing
+    E   floating point
+    %   modulus
+    ^   exponentiation
     *   multiplication
     /   division
-    ^   exponentiation
-    []  bracketing
+    +   addition
+    -   subtraction
+
+Additionally, individual values can be modified using the operators:
+
+    ~   negation
+    !   factorial
 
 Values between operators can are given by a value, unit or value unit pair:
 
@@ -31,20 +38,42 @@ Values between operators can are given by a value, unit or value unit pair:
 
     > dima 1m^2/s^2
     1 m^2 s^-2
-    
+
     > dima J/N
     1 m
+
+Note that exponentiation is applied to full expression:
+
+    > dima 2kg^2
+    4 kg^2
+
+    > dima 2*[kg^2]
+    2 kg^2
 
 Empty brackets will evaluate to unity:
 
     > dima []
     1
-    
+
+Floating Point Representations:
+
+    > dima 1E5
+    100000
+
+    > dima 1E~5
+    1e-0.5
+
+    > dima 1E5kg
+    100000 kg
+
+    > dima 1E2kg^2
+    10000 kg^2
+
 Dima has a built in set of physical constants:
 
     > dima R
     8.31446 kg m^2 K^-1 mol^-1 s^-2
-    
+
 You can change your cout precision (see main file) to stop early value truncation.
 
 Note that dima uses square brackets because the default bash shell doesn't like `()` round brackets, and I don't want to always have to type `\(` and `\)`. This program is about convenience. Feel free to fork and change though if you are using a different shell.

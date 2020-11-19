@@ -67,6 +67,11 @@ unit operator*(unit l, unit r){
   return l;
 }
 
+unit operator%(unit l, unit r){
+  if(l == r) return l;
+  fatal("Unit mismatch in operator %");
+}
+
 template<typename T>
 unit operator^(unit l, const T f){   //Note: this operator has bad precedence, so requires bracketing
   for(int i = 0; i < l.dim.size(); i++)
@@ -83,13 +88,13 @@ void uprint(ostream& o, string x, double f){
 }
 
 ostream& operator<<(ostream& o, const unit& u){
-  uprint(o, "kg", u.dim[0]);
+  uprint(o, "kg", u.dim[2]);
   uprint(o, "m", u.dim[1]);
-  uprint(o, "A", u.dim[2]);
-  uprint(o, "K", u.dim[3]);
-  uprint(o, "mol", u.dim[4]);
-  uprint(o, "cd", u.dim[5]);
-  uprint(o, "s", u.dim[6]);
+  uprint(o, "A", u.dim[3]);
+  uprint(o, "K", u.dim[4]);
+  uprint(o, "mol", u.dim[5]);
+  uprint(o, "cd", u.dim[6]);
+  uprint(o, "s", u.dim[0]);
   return o;
 }
 
@@ -134,6 +139,12 @@ val operator*(val l, const val& r){
 val operator/(val l, const val& r){
   l.n = l.n / r.n;
   l.u = l.u / r.u;
+  return l;
+}
+
+val operator%(val l, const val& r){
+  l.n -= (int)(l.n/r.n)*r.n;
+  l.u = l.u%r.u;
   return l;
 }
 

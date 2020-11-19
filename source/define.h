@@ -53,10 +53,15 @@ map <string, val> ud = {
 
   //Derived Units
   {"J", val(1, kg*(m^2)/(s^2))},    //Joule   (Energy / Work)
+  {"erg", val(1E-7, kg*(m^2)/(s^2))},    //erg   (Energy / Work)
   {"eV", val(1.602176634E-19, kg*(m^2)/(s^2))},  //Electron Volt
+  {"kcal", val(4184, kg*(m^2)/(s^2))},    //Joule   (Energy / Work)
 
   {"W",   val(1, kg*(m^2)/(s^3))},    //Watt    (Power)
+
+  {"mN",   val(1E-3, kg*m/(s^2))},        //Newton  (Force)
   {"N",   val(1, kg*m/(s^2))},        //Newton  (Force)
+  {"dyn", val(1E-5, kg*m/(s^2))},     //dynes  (Force)
 
   {"kV",  val(1E+3, kg*(m^2)/(s^3)/A)},  //Voltage (Energy per Charge)
   {"V",   val(1, kg*(m^2)/(s^3)/A)},  //Voltage (Energy per Charge)
@@ -68,23 +73,27 @@ map <string, val> ud = {
   {"Hz",    val(1E+0, D/s)},           //Hertz   (Frequency)
   {"mHz",   val(1E-3, D/s)},           //Hertz   (Frequency)
   {"uHz",   val(1E-6, D/s)},           //Hertz   (Frequency)
+  {"Bq",    val(1E+0, D/s)},           //Becquerel   (Frequency)
 
-  {"Pa",    val(1, kg*m/(s^2))},    //Pascal  (Pressure)
-  {"kbar",  val(1E+8, kg*m/(s^2))},
-  {"bar",   val(1E+5, kg*m/(s^2))}, //Bar
-  {"mbar",  val(1E+2, kg*m/(s^2))},
+  {"Torr",  val(133.322, kg/m/(s^2))},
+  {"atm",   val(101325, kg/m/(s^2))},    //Pascal  (Pressure)
+  {"Pa",    val(1, kg/m/(s^2))},    //Pascal  (Pressure)
+  {"kbar",  val(1E+8, kg/m/(s^2))},
+  {"bar",   val(1E+5, kg/m/(s^2))}, //Bar
+  {"mbar",  val(1E+2, kg/m/(s^2))},
 
   {"C",     val(1, A*s)},           //Coulomb (Charge)
 
   //Physical Constants
   {"R",   val(8.31446261815324, kg*(m^2)/(s^2)/K/mol)},
   {"kB",  val(1.380649E-23, kg*(m^2)/(s^2)/K)},
+  {"F",  val(96485.3329, A*s/mol)},
   {"NA",  val(6.02214076E+23, D/mol)},
   {"h",   val(6.62607015E-34, kg*(m^2)/(s^3))},
 
   //Mathematical Constants
   {"pi", val(3.14159265359, D)},
-  {"e", val()}
+  {"e", val(2.718281828459, D)}
 };
 
 val getval(string s){

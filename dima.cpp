@@ -23,6 +23,7 @@ using dlist = initializer_list<double>;
 
 #include "source/unit.h"
 #include "source/define.h"
+#include "source/func.h"
 #include "source/calc.h"
 
 int main( int argc, char* args[] ) {
