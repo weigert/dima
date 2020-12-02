@@ -1,8 +1,3 @@
-
-/*
-    You can define different dictionaries.
-*/
-
 map <string, val> ud = {
 
   //Time
@@ -97,12 +92,6 @@ map <string, val> ud = {
 };
 
 val getval(string s){
-  auto search = ud.find(s);
-  if(search != ud.end()){
-    val m = ud[s];
-    return m;
-  }
-
-  std::cout<<"Could not identify unit \""<<s<<"\""<<std::endl;
-  exit(0);
+  if(ud.find(s) != ud.end()) return ud[s];
+  fatal("Could not identify unit \""+s+"\"");
 }

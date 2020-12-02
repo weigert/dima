@@ -1,16 +1,3 @@
-/*
-===============================
-          SI Base Unit
-===============================
-*/
-
-#define MAXDIM 7
-
-void fatal(string err){
-  cout<<err<<endl;
-  exit(0);
-}
-
 struct unit{              //Generic SI Derived-Unit
   vector<double> dim;
   unit(){}; //Dimensionless
@@ -79,8 +66,6 @@ unit operator^(unit l, const T f){   //Note: this operator has bad precedence, s
   return l;
 }
 
-/* Unit STDIO */
-
 void uprint(ostream& o, string x, double f){
   if(f == 0) return;
   if(f == 1) o<<x<<" ";
@@ -98,13 +83,7 @@ ostream& operator<<(ostream& o, const unit& u){
   return o;
 }
 
-/*
-===============================
-     Compound Unit + Value
-===============================
-*/
-
-struct val{ //Scale + Unit
+struct val{ //Scale + Unit / Magnitude + Dimension
   double n = 1.0;
   unit u;
 
@@ -149,10 +128,7 @@ val operator%(val l, const val& r){
 }
 
 val operator^(val l, const val& r){
-  if(r.u != D){
-    std::cout<<"Non-dimensionless exponent"<<std::endl;
-    exit(0);
-  }
+  if(r.u != D) fatal("Non-Dimensionless Exponent");
   l.n = pow(l.n, r.n);
   l.u = l.u ^ r.n;
   return l;

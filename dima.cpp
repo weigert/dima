@@ -17,9 +17,15 @@ By Nicholas McDonald 2020
 #include <vector>
 #include <array>
 #include <initializer_list>
+#include <functional>
 
 using namespace std;
 using dlist = initializer_list<double>;
+
+void fatal(string err){
+  cout<<err<<endl;
+  exit(0);
+}
 
 #include "source/unit.h"
 #include "source/define.h"
@@ -28,13 +34,9 @@ using dlist = initializer_list<double>;
 
 int main( int argc, char* args[] ) {
 
-  //cout.precision(17);
-
   string expression = compress(argc, args);   //Compress Commandline
   pv parsevec = parse(expression);            //Parse into a vector
-
-  val n = eval(parsevec, 0);
-  cout<<n<<endl;
+  cout<<eval(parsevec, 0)<<endl;              //Evaluate expression
 
   return 0;
 
