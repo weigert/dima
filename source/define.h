@@ -93,5 +93,6 @@ map <string, val> ud = {
 
 val getval(string s){
   if(ud.find(s) != ud.end()) return ud[s];
-  fatal("Could not identify unit \""+s+"\"");
+  throw fatal("Could not identify unit \""+s+"\"");
+  return val(0, D);
 }

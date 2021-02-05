@@ -22,9 +22,9 @@ By Nicholas McDonald 2020
 using namespace std;
 using dlist = initializer_list<double>;
 
-void fatal(string err){
-  cout<<err<<endl;
-  exit(0);
+string fatal(string err){
+  // This function is simple, but it might return custom exceptions in the future.
+  return err;
 }
 
 #include "source/unit.h"
@@ -36,7 +36,16 @@ int main( int argc, char* args[] ) {
 
   string expression = compress(argc, args);   //Compress Commandline
   pv parsevec = parse(expression);            //Parse into a vector
-  cout<<eval(parsevec, 0)<<endl;              //Evaluate expression
+
+  try { 
+    // Bug: Results end with a space
+    cout<<eval(parsevec, 0)<<endl;            //Evaluate expression
+  } catch (const std::exception& e) { 
+    cout<<"Exc: "<<endl;
+    std::cout << e.what() << endl;
+  } catch (string err) {
+    cout<<err<<endl;
+  }
 
   return 0;
 
