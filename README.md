@@ -25,7 +25,7 @@ Additionally, individual values can be modified using the operators:
     ~   negation
     !   factorial
 
-Values between operators can are given by a value, unit or value unit pair:
+Values between operators can be given by a value, unit or value unit pair:
 
     > dima 1
     1
@@ -61,7 +61,7 @@ Floating Point Representations:
     100000
 
     > dima 1E~5
-    1e-0.5
+    1e-05
 
     > dima 1E5kg
     100000 kg
