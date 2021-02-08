@@ -38,8 +38,8 @@ for ((i = 0; i < len; i += 2)); do
     expression=${CASES[$i]}
     expectedValue=${CASES[$i + 1]}
     res=$(sh -c "$expression")
-    # Bug: Results end with a space
-    res=$(echo $res | sed -e 's/^[[:space:]]*//')
+    # If results end with a space
+    # res=$(echo $res | sed -e 's/^[[:space:]]*//')
     # echo "[$expression/$expectedValue/$res]"
     if [ "$res" != "$expectedValue" ]; then
         echo "[Test failed] the expression '$expression' returns '$res', expected '$expectedValue'"

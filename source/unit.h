@@ -68,8 +68,8 @@ unit operator^(unit l, const T f){   //Note: this operator has bad precedence, s
 
 void uprint(ostream& o, string x, double f){
   if(f == 0) return;
-  if(f == 1) o<<x<<" ";
-  else o<<x<<"^"<<f<<" ";
+  if(f == 1) o << " " << x;
+  else o << " " << x << "^" << f;
 }
 
 ostream& operator<<(ostream& o, const unit& u){
@@ -135,7 +135,7 @@ val operator^(val l, const val& r){
 }
 
 ostream& operator<<(ostream& o, const val& v){
-  return (o << v.n <<" "<< v.u);
+  return (o << v.n << v.u);
 }
 
 val operator|(val l, const val& r) {
