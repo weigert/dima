@@ -17,6 +17,7 @@ The expression can consist of any of the following mathematical binary operators
     ^   exponentiation
     *   multiplication
     /   division
+    \   downward division
     +   addition
     -   subtraction
 
@@ -95,6 +96,10 @@ Dima will also throw errors when trying to add non-consistent units, but will ev
     make dima
 
 This program has no dependencies (besides a c++ compiler and the standard template library).
+
+### Installation
+
+    make install
 
 Running this with privilege will place the executable in your `/usr/bin` so you can access it anywhere.
 

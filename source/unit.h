@@ -18,7 +18,7 @@ const unit cd =  unit({0, 0, 0, 0, 0, 0, 1});
 
 bool operator==(const unit& l, const unit& r){
   if(l.dim.size() != r.dim.size())
-    fatal("Dimension mismatch");
+    throw fatal("Dimension mismatch");
   for(int i = 0; i < l.dim.size(); i++)
     if(l.dim[i] != r.dim[i]) return false;
   return true;
@@ -30,17 +30,17 @@ bool operator!=(const unit& l, const unit& r){
 
 unit operator+(unit l, unit r){
   if(l == r) return l;
-  fatal("Unit mismatch in operator +");
+  throw fatal("Unit mismatch in operator +");
 }
 
 unit operator-(unit l, unit r){
   if(l == r) return l;
-  fatal("Unit mismatch in operator -");
+  throw fatal("Unit mismatch in operator -");
 }
 
 unit operator/(unit l, unit r){
   if(l.dim.size() != r.dim.size())
-    fatal("Dimension mismatch");
+    throw fatal("Dimension mismatch");
   for(int i = 0; i < l.dim.size(); i++)
     l.dim[i] -= r.dim[i];
   return l;
@@ -48,7 +48,7 @@ unit operator/(unit l, unit r){
 
 unit operator*(unit l, unit r){
   if(l.dim.size() != r.dim.size())
-    fatal("Dimension mismatch");
+    throw fatal("Dimension mismatch");
   for(int i = 0; i < l.dim.size(); i++)
     l.dim[i] += r.dim[i];
   return l;
@@ -56,7 +56,7 @@ unit operator*(unit l, unit r){
 
 unit operator%(unit l, unit r){
   if(l == r) return l;
-  fatal("Unit mismatch in operator %");
+  throw fatal("Unit mismatch in operator %");
 }
 
 template<typename T>
@@ -68,8 +68,8 @@ unit operator^(unit l, const T f){   //Note: this operator has bad precedence, s
 
 void uprint(ostream& o, string x, double f){
   if(f == 0) return;
-  if(f == 1) o<<x<<" ";
-  else o<<x<<"^"<<f<<" ";
+  if(f == 1) o << " " << x;
+  else o << " " << x << "^" << f;
 }
 
 ostream& operator<<(ostream& o, const unit& u){
@@ -128,12 +128,18 @@ val operator%(val l, const val& r){
 }
 
 val operator^(val l, const val& r){
-  if(r.u != D) fatal("Non-Dimensionless Exponent");
+  if(r.u != D) throw fatal("Non-Dimensionless Exponent");
   l.n = pow(l.n, r.n);
   l.u = l.u ^ r.n;
   return l;
 }
 
 ostream& operator<<(ostream& o, const val& v){
-  return (o << v.n <<" "<< v.u);
+  return (o << v.n << v.u);
+}
+
+val operator|(val l, const val& r) {
+  l.n = floor(l.n/r.n);
+  l.u = l.u / r.u;
+  return l;
 }

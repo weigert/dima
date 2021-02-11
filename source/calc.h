@@ -28,7 +28,7 @@ pv parse(string e){
     const char c = e[i];
 
     string brackets = "[]";
-    string operators = "+-*/^%";    //Binary Operators
+    string operators = "+-*/^%\\";    //Binary Operators
     string special = "!~E";         //Single Operators
     string numbers = "0123456789.";
 
@@ -95,7 +95,7 @@ val construct(pv pvec, int n){
       i++;
     }
     if(!s.empty()) p = stof(s);
-    else fatal("Missing exponent in floating point representation.");
+    else throw fatal("Missing exponent in floating point representation.");
     s.clear();
   }
 
@@ -128,9 +128,10 @@ val eval(val a, val b, char op){
   else if(op == '-') a = a - b;
   else if(op == '*') a = a * b;
   else if(op == '/') a = a / b;
+  else if(op == '\\') a = a | b;
   else if(op == '^') a = a ^ b;
   else if(op == '%') a = a % b;
-  else fatal("Operator not recognized");
+  else throw fatal("Operator not recognized");
   return a;
 }
 
@@ -190,7 +191,7 @@ val eval(pv pvec, int n){                         //Parse Vector Evaluator
 
   }
 
-  if(ovec.size() + 1 != vvec.size()) fatal("Operator Count Mismatch");
+  if(ovec.size() + 1 != vvec.size()) throw fatal("Operator Count Mismatch");
 
   function<void(string)> operate = [&](string op){
     for(size_t i = 0; i < ovec.size();){
@@ -205,7 +206,7 @@ val eval(pv pvec, int n){                         //Parse Vector Evaluator
 
   operate("%");
   operate("^");
-  operate("*/");
+  operate("*/\\");
   operate("+-");
 
   return vvec[0];
